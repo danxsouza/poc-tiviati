@@ -8,7 +8,7 @@ Welcome to my poc where you navigate on the page serverest.dev with Cypress by [
 - Node v22.13.1
 - npm v10.9.2
 - git v2.46.0
-- VSCode 1.92.1 (Universal)
+- VSCode 1.96.1 (Universal)
 - Or use another IDE do you prefer
 
 ## Observation
