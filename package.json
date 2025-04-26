@@ -1,0 +1,23 @@
+{
+  "name": "poc-gui-e2e-and-api-automation-testing",
+  "version": "1.0.0",
+  "description": "POC GUI E2E and API Automation Testing with Cypress IO",
+  "main": "cypress.config.js",
+  "scripts": {
+    "test:ui": "cypress open",
+    "test:headless": "cypress run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danxsouza/poc-tiviati.git"
+  },
+  "keywords": [
+    "cypress", "e2e", "api", "automation", "testing", "poc"
+  ],
+  "author": "Danilo Batista de Souza",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/danxsouza/poc-tiviati/issues"
+  },
+  "homepage": "https://github.com/danxsouza/poc-tiviati#readme"
+}
