@@ -1,10 +1,10 @@
-describe('Validating Request', () => {
+describe('Validating API Request', () => {
     context('GET /usuarios', () => {
         it('Should test with a valid token saved', () => {
             cy.signupAndGetToken();
             cy.request({
                 method: 'GET',
-                url: 'https://serverest.dev/usuarios',
+                url: '/usuarios',
                 headers: {
                     Authorization: Cypress.env('authToken')
                 }
@@ -25,7 +25,7 @@ describe('Validating Request', () => {
                 expect(response.status).to.eq(200);
                 expect(response.body.usuarios[0]).to.have.all.keys(
                     'nome', 'email', 'password', 'administrador', '_id'
-                )
+                );
             });
         });
 
@@ -35,7 +35,8 @@ describe('Validating Request', () => {
                 url: '/usuarios',
                 headers: {
                     accept: 'application/json',
-                }
+                },
+                failOnStatusCode: false,
             }).then(response => {
                 let body = JSON.parse(JSON.stringify(response.body));
                 expect(response.status).to.eq(200);
@@ -51,11 +52,12 @@ describe('Validating Request', () => {
                 method: 'POST',
                 url: '/usuarios',
                 body: {
-                    nome: "Usuário Teste",
-                    email: `usuario${Date.now()}@qa.com.br`,
-                    password: "teste",
+                    nome: "User Test",
+                    email: `newuser${Date.now()}@serverest.com`,
+                    password: "test123",
                     administrador: "true"
-                }
+                },
+                failOnStatusCode: false,
             }).then(response => {
                 expect(response.status).to.eq(201);
                 userId = response.body._id;
@@ -66,9 +68,9 @@ describe('Validating Request', () => {
         context('PUT /usuarios/{_id}', () => {
             it('Should update the user data and validate the response', () => {
                 const updatedUser = {
-                    nome: "Usuário Alterado",
-                    email: `usuario_alterado${Date.now()}@qa.com.br`,
-                    password: "novaSenha",
+                    nome: "User Updated",
+                    email: `user_updated${Date.now()}@serverest.com`,
+                    password: "newpassword123",
                     administrador: "false"
                 };
                 cy.request({
@@ -96,14 +98,7 @@ describe('Validating Request', () => {
     context('DELETE /usuarios/{_id}', () => {
         it('Should delete a user by their id', () => {
             cy.signupAndGetToken();
-            cy.deleteUserById(Cypress.env('userId'));
-            cy.request({
-                method: 'DELETE',
-                url: `https://serverest.dev/usuarios/${Cypress.env('userId')}`,
-                failOnStatusCode: false
-            }).then((getResponse) => {
-                expect(getResponse.status).to.eq(200);
-            });
+            cy.deleteUserById();
         });
     });
 });

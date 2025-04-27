@@ -1,21 +1,20 @@
-describe('First Signup & Login', () => {
+describe('First Signup & Login - Product in Cart Validation', () => {
     before(() => {
         cy.registerNewUser();
     });
 
-    context('Validating an Invalid Login', () => {
-        it('Should validate if it is a Valid Login', () => {
+    context('Validating a valid and invalid login', () => {
+        it('Should validate if it is a valid login', () => {
             cy.login();
         });
 
-        it('Should validate if it is an Invalid Login', () => {
-            cy.visit("https://front.serverest.dev/login");
-            cy.get('[data-testid="email"]').type("wronguser@gmail.com");
-            cy.get('[data-testid="senha"]').type('wrongpassword');
+        it('Should validate if it is an invalid login', () => {
+            cy.visit(Cypress.env('frontBaseUrl') + '/login');
+            cy.get('[data-testid="email"]').type("wronguser@serverest.com");
+            cy.get('[data-testid="senha"]').type('wrongpass', { log: false });
             cy.get('[data-testid="entrar"]').click();
             cy.get('.alert').should('be.visible').should('have.text', '×Email e/ou senha inválidos');
         });
-
     });
 
     context('Validating the product list', () => {
@@ -25,10 +24,10 @@ describe('First Signup & Login', () => {
                 .first()
                 .find('h5')
                 .invoke('text')
-                .then((produto) => {
+                .then((product) => {
                     cy.get('[data-testid="pesquisar"]')
                         .should('be.visible')
-                        .type(produto);
+                        .type(product);
                 });
             cy.get('[data-testid="botaoPesquisar"]')
                 .should('be.visible')
@@ -39,8 +38,8 @@ describe('First Signup & Login', () => {
                 .first()
                 .find('h5')
                 .invoke('text')
-                .then((produto) => {
-                    cy.get('.card-title').should('have.text', produto);
+                .then((product) => {
+                    cy.get('.card-title').should('have.text', product);
                 });
         });
 
@@ -62,7 +61,7 @@ describe('First Signup & Login', () => {
         });
     });
 
-    context('Validating the Headers', () => {
+    context('Validating the headers', () => {
         it('Should validate if links on the headers are available', () => {
             cy.login();
             cy.get('[data-testid="home"]').should('have.text', 'Home');
